@@ -14,4 +14,8 @@
     <Folder Include="Data\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ForumApp.Data\ForumApp.Data.csproj" />
+  </ItemGroup>
+
 </Project>
