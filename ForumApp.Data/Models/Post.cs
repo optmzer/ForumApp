@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace ForumApp.Data.Models
 {
@@ -12,6 +11,7 @@ namespace ForumApp.Data.Models
         public DateTime Created { get; set; }
         //Later on can add upload for pictures
 
+        //ApplicationUser Identiies a user who made the post
         public virtual ApplicationUser User { get; set; }
         public virtual Forum Forum { get; set; }
 
