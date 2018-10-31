@@ -9,6 +9,7 @@ namespace ForumApp.Data.Models
         public DateTime Created { get; set; }
 
         //Who reply belongs to
+        //virtual is a Foreighn Key
         public virtual ApplicationUser User { get; set; }
         //To what Post it belongs to
         public virtual Post Post { get; set; }
