@@ -1,14 +1,15 @@
 ﻿using ForumApp.Data.Models;
-using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace ForumApp.Data
 {
     public interface IForum
     {
+        //Describing methods we are going to use.
         Forum GetById(int forumId);
-        IEquatable<Forum> GetAll();
-        IEquatable<ApplicationUser> GetAllActiveUsers();
+        IEnumerable<Forum> GetAll();
+        IEnumerable<ApplicationUser> GetAllActiveUsers();
 
         Task Create(Forum forum);
         Task Delete(int forumId);
