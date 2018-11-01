@@ -4,4 +4,8 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ForumApp.Data\ForumApp.Data.csproj" />
+  </ItemGroup>
+
 </Project>

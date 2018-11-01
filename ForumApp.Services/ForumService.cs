@@ -1,5 +1,6 @@
 ﻿using ForumApp.Data;
 using ForumApp.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -27,7 +28,8 @@ namespace ForumApp.Services
 
         public IEnumerable<Forum> GetAll()
         {
-            return _context.Forums;
+            return _context.Forums
+                .Include(forum => forum.Posts);
         }
 
         public IEnumerable<ApplicationUser> GetAllActiveUsers()
