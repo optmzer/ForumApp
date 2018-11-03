@@ -3,6 +3,7 @@ using ForumApp.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ForumApp.Services
@@ -39,7 +40,16 @@ namespace ForumApp.Services
 
         public Forum GetById(int forumId)
         {
-            throw new NotImplementedException();
+            var forum = _context.Forums
+                .Where(f => f.Id == forumId)
+                .Include(f => f.Posts)
+                    .ThenInclude(p => p.User) //Post property + Creator of the post User
+                .Include(f => f.Posts)
+                    .ThenInclude(p => p.Replies) //Include Replies and their creators
+                        .ThenInclude(r => r.User)
+                 .FirstOrDefault(); //To make sure we are not returning NULL
+
+            return forum;
         }
 
         public Task UpdateForumDescription(int forumId, string newDescription)

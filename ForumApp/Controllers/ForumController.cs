@@ -31,5 +31,12 @@ namespace ForumApp.Controllers
 
             return View(model);
         }
+
+        public IActionResult Topic(int id)
+        {
+            var topic = _forumService.GetById(id);
+
+            return View();
+        }
     }
 }
