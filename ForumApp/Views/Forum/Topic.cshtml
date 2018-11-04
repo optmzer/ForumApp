@@ -1,0 +1,24 @@
+﻿@model ForumApp.Models.Forum.ForumTopicModel;
+
+
+<h2>Posts for @Model.TopicTitle</h2>
+
+<table class="table table-hover" id="forumIndexTable">
+    <tbody>
+        @foreach (var post in Model.PostList)
+        {
+            <tr>
+                <td>
+                    <a asp-controller="Forum"
+                       asp-action="Post"
+                       asp-route-id="@post.Id">
+                        @post.Title
+                    </a>
+                </td>
+                <td>
+                    @post.Content
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

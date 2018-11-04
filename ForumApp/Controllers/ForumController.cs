@@ -34,9 +34,26 @@ namespace ForumApp.Controllers
 
         public IActionResult Topic(int id)
         {
-            var topic = _forumService.GetById(id);
+            var forum = _forumService.GetById(id);
+            //Convert forum into list of posts.
 
-            return View();
+            var posts = forum.Posts.Select(post => new ForumPostListingModel
+            {
+                Id = post.Id,
+                Created = post.Created,
+                Title = post.Title,
+                Content = post.Content,
+                User = post.User
+                //Later add number of replies
+            });
+
+            var model = new ForumTopicModel
+            {
+                TopicTitle = forum.Title,
+                PostList = posts
+            };
+
+            return View(model);
         }
     }
 }
