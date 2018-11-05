@@ -25,7 +25,8 @@ namespace ForumApp.Controllers
             {
                 Id = forum.Id,
                 Title = forum.Title,
-                Description = forum.Description
+                Description = forum.Description,
+                ImageUrl = forum.ImageUrl
             });
 
             var model = new ForumIndexModel()
@@ -39,29 +40,15 @@ namespace ForumApp.Controllers
         public IActionResult Topic(int id)
         {
             var forum = _forumService.GetById(id);
+            
             //Convert forum into list of posts.
-
-            //var posts = forum.Posts.Select(post => new PostListingModel
-            //{
-            //    Id = post.Id,
-            //    Title = post.Title,
-            //    Created = post.Created.ToLocalTime().ToString("d"),
-            //    //User data
-            //    AuthorName = post.User.UserName,
-            //    AuthorId = post.User.Id,
-
-            //    //
-            //});
-
-            var posts = _postService.GetPostsByForum(id);
-
-            var postListings = posts.Select(post => new PostListingModel
+            var posts = forum.Posts.Select(post => new PostListingModel
             {
                 Id = post.Id,
                 Title = post.Title,
                 AuthorId = post.User.Id,
                 AuthorName = post.User.UserName,
-                AuthorRating = post.User.Rating, // Create it later
+                AuthorRating = post.User.Rating,
                 Created = post.Created.ToLocalTime().ToString("d"),
                 RepliesCount = post.Replies.Count(),
                 Forum = BuildForumListing(post)
@@ -69,8 +56,8 @@ namespace ForumApp.Controllers
 
             var model = new ForumTopicModel
             {
-                TopicTitle = forum.Title,
-                PostList = postListings
+                Forum = BuildForumListing(forum),
+                PostList = posts
             };
 
             return View(model);
@@ -78,7 +65,20 @@ namespace ForumApp.Controllers
 
         private ForumListingModel BuildForumListing(Post post)
         {
-            throw new NotImplementedException();
+            var forum = post.Forum;
+
+            return BuildForumListing(forum);
+        }
+
+        private ForumListingModel BuildForumListing(Forum forum)
+        {
+            return new ForumListingModel
+            {
+                Id = forum.Id,
+                Title = forum.Title,
+                Description = forum.Description,
+                ImageUrl = forum.ImageUrl
+            };
         }
     }
 }
