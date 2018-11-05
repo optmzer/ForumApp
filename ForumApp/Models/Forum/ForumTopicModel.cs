@@ -9,6 +9,6 @@ namespace ForumApp.Models.Forum
     public class ForumTopicModel
     {
         public string TopicTitle { get; set; }
-        public IEnumerable<ForumPostListingModel> PostList { set; get; }
+        public IEnumerable<PostListingModel> PostList { set; get; }
     }
 }

@@ -10,9 +10,12 @@ namespace ForumApp.Controllers
     public class ForumController : Controller
     {
         private readonly IForum _forumService;
-        public ForumController(IForum forumService)
+        private readonly IPost _postService;
+
+        public ForumController(IForum forumService, IPost postService)
         {
             _forumService = forumService;
+            _postService = postService;
         }
 
         public IActionResult Index()
@@ -37,15 +40,19 @@ namespace ForumApp.Controllers
             var forum = _forumService.GetById(id);
             //Convert forum into list of posts.
 
-            var posts = forum.Posts.Select(post => new ForumPostListingModel
-            {
-                Id = post.Id,
-                Created = post.Created,
-                Title = post.Title,
-                Content = post.Content,
-                User = post.User
-                //Later add number of replies
-            });
+            //var posts = forum.Posts.Select(post => new PostListingModel
+            //{
+            //    Id = post.Id,
+            //    Title = post.Title,
+            //    Created = post.Created.ToLocalTime().ToString("d"),
+            //    //User data
+            //    AuthorName = post.User.UserName,
+            //    AuthorId = post.User.Id,
+
+            //    //
+            //});
+
+            var posts = _postService.GetFilteredPosts(id);
 
             var model = new ForumTopicModel
             {

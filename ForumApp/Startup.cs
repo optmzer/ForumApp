@@ -8,6 +8,7 @@ using ForumApp.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using ForumApp.Services;
+using ForumApp.Data.Models;
 
 namespace ForumApp
 {
@@ -39,6 +40,8 @@ namespace ForumApp
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             // Adding IForum
             services.AddScoped<IForum, ForumService>();
+            //Adding IPost
+            services.AddScoped<IPost, PostService>();
 
         }
 
