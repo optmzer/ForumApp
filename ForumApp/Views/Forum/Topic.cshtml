@@ -12,11 +12,14 @@
                     <a asp-controller="Forum"
                        asp-action="Post"
                        asp-route-id="@post.Id">
-                        @post.Title
+                        @post.AuthorName
                     </a>
                 </td>
                 <td>
-                    @post.Content
+                    @post.Title
+                </td>
+                <td>
+                    @post.Created
                 </td>
             </tr>
         }

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using ForumApp.Data;
 using ForumApp.Data.Models;
@@ -52,15 +53,32 @@ namespace ForumApp.Controllers
             //    //
             //});
 
-            var posts = _postService.GetFilteredPosts(id);
+            var posts = _postService.GetPostsByForum(id);
+
+            var postListings = posts.Select(post => new PostListingModel
+            {
+                Id = post.Id,
+                Title = post.Title,
+                AuthorId = post.User.Id,
+                AuthorName = post.User.UserName,
+                AuthorRating = post.User.Rating, // Create it later
+                Created = post.Created.ToLocalTime().ToString("d"),
+                RepliesCount = post.Replies.Count(),
+                Forum = BuildForumListing(post)
+            });
 
             var model = new ForumTopicModel
             {
                 TopicTitle = forum.Title,
-                PostList = posts
+                PostList = postListings
             };
 
             return View(model);
+        }
+
+        private ForumListingModel BuildForumListing(Post post)
+        {
+            throw new NotImplementedException();
         }
     }
 }
