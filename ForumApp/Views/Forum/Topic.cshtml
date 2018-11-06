@@ -1,27 +1,44 @@
 ﻿@model ForumApp.Models.Forum.ForumTopicModel;
 
+<h2>Posts for @Model.Forum.Title</h2>
 
-<h2>Posts for @Model.TopicTitle</h2>
 
-<table class="table table-hover" id="forumIndexTable">
-    <tbody>
-        @foreach (var post in Model.PostList)
-        {
-            <tr>
-                <td>
-                    <a asp-controller="Forum"
-                       asp-action="Post"
-                       asp-route-id="@post.Id">
+@if (Model.PostList.Any())
+{
+    <table class="table table-bordered table-hover" id="forumIndexTable">
+        <tbody>
+            @foreach (var post in Model.PostList)
+            {
+                <tr>
+                    <td>
+                        <a asp-controller="Post"
+                           asp-action="Index"
+                           asp-route-id="@post.Id">
+                            @post.Title
+                        </a>
+                    </td>
+                    <td>
                         @post.AuthorName
-                    </a>
-                </td>
-                <td>
-                    @post.Title
-                </td>
-                <td>
-                    @post.Created
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                    </td>
+                    <td>
+                        @post.Created
+                    </td>
+                    <td>
+                        @post.RepliesCount
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="noPosts">
+        <hr>
+        <p>Post List is empty. Add more Posts</p>
+        <a asp-controller="Post"
+            asp-action="Create"
+            asp-route-id="@Model.Forum.Id"
+        >Create New Post</a>
+    </div>
+}
