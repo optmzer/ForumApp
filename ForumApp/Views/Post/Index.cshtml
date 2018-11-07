@@ -1,0 +1,31 @@
+﻿@model ForumApp.Models.Post.PostIndexModel
+
+
+<div class="container">
+    <h2>Forum: @Model.Forum.Title</h2>
+
+    <h3>Post: @Model.Title</h3>
+    <!-- Create a card here from my post app -->
+    <div>
+        <Content>
+            <p>Author Name: @Model.AuthorName</p>
+            <p>Author Rating: @Model.AuthorRating</p>
+            <p>Post : @Model.Created</p>
+        </Content>
+        <div>
+            <p>@Model.Content</p>
+        </div>
+        <div>Replies count: @Model.RepliesCount</div>
+    </div>
+    <!-- Add replies -->
+
+    @if (Model.PostReplies.Any())
+    {
+        <!-- Build on replies -->
+    }
+    else
+    {
+        <!-- Show something else -->
+    }
+</div>
+

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using ForumApp.Data;
 using ForumApp.Data.Models;
 using ForumApp.Models.Forum;

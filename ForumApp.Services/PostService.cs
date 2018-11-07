@@ -1,5 +1,6 @@
 ﻿using ForumApp.Data;
 using ForumApp.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,7 +44,10 @@ namespace ForumApp.Services
 
         public Post GetPostById(int postId)
         {
-            throw new NotImplementedException();
+            return _context.Posts
+                .Include(post => post.User)
+                .Include(post => post.Forum)
+                .FirstOrDefault(post => post.Id == postId);
         }
 
         public IEnumerable<Post> GetPostsByForum(int forumId)
