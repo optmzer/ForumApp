@@ -45,9 +45,14 @@ namespace ForumApp.Services
         public Post GetPostById(int postId)
         {
             return _context.Posts
+                .Where(post => post.Id == postId)
                 .Include(post => post.User)
+                .Include(post => post.Replies)
+                    .ThenInclude(reply => reply.User)
+                //Because in PostController we use reply.User.UserName
+                // In BuildPostRepliesModel()
                 .Include(post => post.Forum)
-                .FirstOrDefault(post => post.Id == postId);
+                .First();
         }
 
         public IEnumerable<Post> GetPostsByForum(int forumId)
