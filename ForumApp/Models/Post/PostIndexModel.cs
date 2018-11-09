@@ -1,5 +1,4 @@
-﻿using ForumApp.Data.Models;
-using ForumApp.Models.Forum;
+﻿using ForumApp.Models.Forum;
 using ForumApp.Models.PostReply;
 using System.Collections.Generic;
 

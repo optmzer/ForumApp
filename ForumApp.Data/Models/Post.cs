@@ -13,6 +13,7 @@ namespace ForumApp.Data.Models
 
         //ApplicationUser Identiies a user who made the post
         public virtual ApplicationUser User { get; set; }
+        //public virtual IdentityUser User { get; set; }
         public virtual Forum Forum { get; set; }
 
         //Replies

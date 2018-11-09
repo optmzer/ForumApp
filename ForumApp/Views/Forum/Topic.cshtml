@@ -9,18 +9,27 @@
         <tbody>
             @foreach (var post in Model.PostList)
             {
-                <tr>
-                    <td>
-                        <a asp-controller="Post"
-                           asp-action="Index"
-                           asp-route-id="@post.Id">
-                            @post.Title
-                        </a>
-                    </td>
-                    <td>
-                        @post.Description
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @post.Id
+                </td>
+                <td>
+                    <a asp-controller="Post"
+                       asp-action="Index"
+                       asp-route-id="@post.Id">
+                        @post.Title
+                    </a>
+                </td>
+                <td>
+                    @post.AuthorName
+                </td>
+                <td>
+                    @post.AuthorRating
+                </td>
+                <td>
+                    @post.Created
+                </td>
+            </tr>
             }
         </tbody>
     </table>
