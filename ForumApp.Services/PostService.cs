@@ -44,14 +44,15 @@ namespace ForumApp.Services
 
         public Post GetPostById(int postId)
         {
+            // Check if I get correct int postId
             return _context.Posts
                 .Where(post => post.Id == postId)
                 .Include(post => post.User)
+                .Include(post => post.Forum)
                 .Include(post => post.Replies)
                     .ThenInclude(reply => reply.User)
                 //Because in PostController we use reply.User.UserName
                 // In BuildPostRepliesModel()
-                .Include(post => post.Forum)
                 .First();
         }
 

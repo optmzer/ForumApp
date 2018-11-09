@@ -38,19 +38,35 @@ namespace ForumApp.Controllers
         public IActionResult Topic(int id)
         {
             var forum = _forumService.GetById(id);
-            
+
             //Convert forum into list of posts.
-            var posts = forum.Posts.Select(post => new PostListingModel
+            var posts = forum.Posts.Select(p => new ForumListingModel
             {
-                Id = post.Id,
-                Title = post.Title,
-                AuthorId = post.User.Id,
-                AuthorName = post.User.UserName,
-                AuthorRating = post.User.Rating,
-                Created = post.Created.ToLocalTime().ToString("d"),
-                RepliesCount = post.Replies.Count(),
-                Forum = BuildForumListing(post)
+                Id = p.Id,
+                Title = p.Title,
+                Description = p.Content
+                //AuthorId = p.User.Id,
+                //AuthorName = p.User.UserName,
+                //AuthorRating = p.User.Rating,
+                //Created = p.Created.ToLocalTime().ToString("d"),
+                //RepliesCount = p.Replies.Count(),
+                //Forum = BuildForumListing(p)
             });
+
+            //var posts = _postService.GetPostsByForum(id);
+
+            //var postListing = posts.Select(p => new PostListingModel
+            //{
+            //    Id = p.Id,
+            //    Title = p.Title,
+            //    AuthorId = p.User.Id,
+            //    AuthorName = p.User.UserName,
+            //    AuthorRating = p.User.Rating,
+            //    Created = p.Created.ToLocalTime().ToString("d"),
+            //    RepliesCount = p.Replies.Count(),
+            //    Forum = BuildForumListing(p)
+            //});
+
 
             var model = new ForumTopicModel
             {

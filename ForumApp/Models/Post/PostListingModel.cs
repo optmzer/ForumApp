@@ -1,8 +1,4 @@
-﻿using ForumApp.Data.Models;
-using System;
-using System.Collections.Generic;
-
-namespace ForumApp.Models.Forum
+﻿namespace ForumApp.Models.Forum
 {
     public class PostListingModel
     {
