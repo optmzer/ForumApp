@@ -3,9 +3,12 @@ using ForumApp.Data.Models;
 using ForumApp.Models.Forum;
 using ForumApp.Models.Post;
 using ForumApp.Models.PostReply;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ForumApp.Controllers
 {
@@ -13,11 +16,15 @@ namespace ForumApp.Controllers
     {
         private readonly IForum _forumService;
         private readonly IPost _postService;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public PostController(IForum forumService, IPost postService)
+        public PostController(IForum forumService
+                            , IPost postService
+                            , UserManager<ApplicationUser> userManager)
         {
             _forumService = forumService;
             _postService = postService;
+            _userManager = userManager;
         }
 
         public IActionResult Index(int postId)
@@ -45,6 +52,56 @@ namespace ForumApp.Controllers
             return View(model);
         }
 
+        /**
+         * Creates new Post in a Forum determined by forumId
+         */ 
+        public IActionResult CreateNewPost(int forumId)
+        {
+            var forum = _forumService.GetById(forumId);
+
+            var model = new NewPostModel
+            {
+                ForumId = forum.Id,
+                ForumName = forum.Title,
+                ForumImageUrl = forum.ImageUrl,
+                AuthorName = User.Identity.Name
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddPost(NewPostModel model)
+        {
+            var userId = _userManager.GetUserId(User);
+            //_userManager is a built in service. From
+            // Microsoft.AspNetCore.Identity; - Provides API to interact with Users in
+            //Data store.
+            //User is a built in Object that contains Current User info.
+            var user = await _userManager.FindByIdAsync(userId);
+            var post = BuildPost(model, user);
+            //TODO: User management rating.
+
+            await _postService.AddPost(post);
+
+            return RedirectToAction("Index", "Post", post.Id);
+        }
+
+        private Post BuildPost(NewPostModel model, ApplicationUser user)
+        {
+            var forum = _forumService.GetById(model.ForumId);
+
+            return new Post
+            {
+                Title = model.PostTitle,
+                Content = model.PostContent,
+                Created = DateTime.Now,
+                User = user,
+                Forum = forum
+            };
+        }
+
+        // ===== Private Methods
         private IEnumerable<PostReplyModel> BuildPostRepliesModel(IEnumerable<PostReply> replies)
         {
             return replies.Select(reply => new PostReplyModel

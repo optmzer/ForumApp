@@ -2,6 +2,15 @@
 
 <h2>Posts for @Model.Forum.Title</h2>
 
+<span id="headingBtn">
+    <a asp-controller="Post"
+        asp-action="CreateNewPost"
+        asp-route-forumId="@Model.Forum.Id"
+        class="btn btn-newPost"
+    >
+        Create New Post
+    </a>
+</span>
 
 @if (Model.PostList.Any())
 {
@@ -40,8 +49,8 @@ else
         <hr>
         <p>Post List is empty. Add more Posts</p>
         <a asp-controller="Post"
-            asp-action="Create"
-            asp-route-id="@Model.Forum.Id"
+            asp-action="CreateNewPost"
+            asp-route-forumId="@Model.Forum.Id"
         >Create New Post</a>
     </div>
 }
