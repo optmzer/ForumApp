@@ -83,8 +83,9 @@ namespace ForumApp.Controllers
             //TODO: User management rating.
 
             await _postService.AddPost(post);
+            //_postService.AddPost(post).Wait();
 
-            return RedirectToAction("Index", "Post", post.Id);
+            return RedirectToAction("Index", "Post", new { postId = post.Id });
         }
 
         private Post BuildPost(NewPostModel model, ApplicationUser user)
