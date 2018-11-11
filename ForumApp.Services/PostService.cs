@@ -45,6 +45,13 @@ namespace ForumApp.Services
             throw new NotImplementedException();
         }
 
+        public IEnumerable<Post> GetLatestPosts(int numOfPosts)
+        {
+            return GetAll()
+                .OrderByDescending(post => post.Created)
+                .Take(numOfPosts);
+        }
+
         public Post GetPostById(int postId)
         {
             // Check if I get correct int postId

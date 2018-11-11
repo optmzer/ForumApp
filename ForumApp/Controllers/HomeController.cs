@@ -1,18 +1,63 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using ForumApp.Models;
+using ForumApp.Models.Home;
+using ForumApp.Data.Models;
+using ForumApp.Models.Forum;
 
 namespace ForumApp.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IPost _postService;
+
+        public HomeController(IPost postService)
+        {
+            _postService = postService;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            var model = BuildHomeIndexModel();
+
+            return View(model);
+        }
+
+        private HomeIndexModel BuildHomeIndexModel()
+        {
+            var latestPosts = _postService.GetLatestPosts(10);
+
+            var posts = latestPosts.Select(post => new ForumTopicListingModel
+            {
+                Id = post.Id,
+                Title = post.Title,
+                AuthorId = post.User.Id,
+                AuthorName = post.User.UserName,
+                AuthorRating = post.User.Rating,
+                Created = post.Created.ToLocalTime().ToString("d"),
+                RepliesCount = post.Replies.Count(),
+                Forum = BuildForumListingForPost(post)
+            });
+
+            return new HomeIndexModel
+            {
+                LatestPosts = posts,
+                SearchQuery = ""
+            };
+        }
+
+        private ForumListingModel BuildForumListingForPost(Post post)
+        {
+            var forum = post.Forum;
+
+            return new ForumListingModel
+            {
+                Id = forum.Id,
+                Title = forum.Title,
+                Description = forum.Description,
+                ImageUrl = forum.ImageUrl
+            };
         }
 
         public IActionResult About()
