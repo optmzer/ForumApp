@@ -69,7 +69,7 @@ namespace ForumApp
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Forum}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

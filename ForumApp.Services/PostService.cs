@@ -37,7 +37,10 @@ namespace ForumApp.Services
 
         public IEnumerable<Post> GetAll()
         {
-            throw new NotImplementedException();
+            return _context.Posts
+                .Include(post => post.User)
+                .Include(post => post.Forum)
+                .Include(post => post.Replies);
         }
 
         public IEnumerable<Post> GetFilteredPosts(int searchQuery)
