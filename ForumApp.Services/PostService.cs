@@ -36,11 +36,12 @@ namespace ForumApp.Services
         }
 
         public IEnumerable<Post> GetAll()
-        {
+        { // Same includes as in GetPostById()
             return _context.Posts
                 .Include(post => post.User)
                 .Include(post => post.Forum)
-                .Include(post => post.Replies);
+                .Include(post => post.Replies)
+                    .ThenInclude(reply => reply.User);
         }
 
         public IEnumerable<Post> GetFilteredPosts(int searchQuery)
