@@ -2,6 +2,7 @@
 
 
 <div class="container body-content">
+    <!-- Post Header and Return Button -->
     <div class="row postHeader">
         <div class="postHeading">
             <span class="postIndexTitle">
@@ -18,6 +19,48 @@
             </span>
         </div>
     </div>
+    <!-- Post Content -->
+    <div class="row" id="postIndexContent">
+        <div class="col-md-3 postAuthorContainer">
+            <div class="postAuthorImage" style="background-image: url(@Model.AuthorImgUrl);"></div>
+            <a asp-controller="UserProfile" 
+            asp-action="UserDetails"
+            asp-route-userId="@Model.AuthorId">
+                @Model.AuthorName
+            </a>
+            <span class="postDate">@Model.Created</span>
+            @if (Model.IsAdmin)
+            {
+            <span class="isAdmin smaller">Admin</span>
+            }
+        </div>
+        <div class="col-md-9 postContentContainer">
+            <div class="postContent">
+                @Html.Raw(Model.Content)
+            </div>
+        </div>
+    </div>
+
+    <!--Reply divider-->
+    <div class="row" id="replyDivider"></div>
+
+    <!-- Post Replies -->
+    @if (User.Identity.IsAuthenticated)
+    {
+    <div class="row">
+        <span>
+            <a 
+            class="btn btn-newReply"
+            asp-controller="Reply"
+            asp-action="CreateReply"
+            asp-route-postId="@Model.Id">
+                Write Comment
+            </a>
+        </span>
+    </div>
+    }
+
+
 
     <h2>Forum: @Model.Forum.Title</h2>
 
