@@ -46,15 +46,17 @@ namespace ForumApp.Controllers
                 AuthorRating = post.User.Rating,
                 Forum = BuildForumListing(post.Forum),
                 PostReplies = replies,
-                RepliesCount = post.Replies.Count()
+                RepliesCount = post.Replies.Count(),
+                IsAuthorAdmin = IsAuthorAdmin(post.User)
             };
 
             return View(model);
         }
 
+        
         /**
          * Creates new Post in a Forum determined by forumId
-         */ 
+         */
         public IActionResult CreateNewPost(int forumId)
         {
             var forum = _forumService.GetById(forumId);
@@ -126,6 +128,17 @@ namespace ForumApp.Controllers
                 Description = forum.Description,
                 ImageUrl = forum.ImageUrl
             };
+        }
+
+        private bool IsAuthorAdmin(ApplicationUser user)
+        {
+            // GetRolesAsync returns a list of strings for that user
+            // If roles contains "Admin" then the uset is Admin.
+
+            return _userManager
+                .GetRolesAsync(user)
+                .Result
+                .Contains("Admin");
         }
 
 

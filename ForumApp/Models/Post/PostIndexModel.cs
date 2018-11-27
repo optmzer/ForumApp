@@ -12,6 +12,7 @@ namespace ForumApp.Models.Post
         public string Content { get; set; }
 
         // Author data
+        public bool IsAuthorAdmin { get; set; }
         public string AuthorName { get; set; }
         public int AuthorRating { get; set; }
         public string AuthorImgUrl { get; set; }
