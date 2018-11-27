@@ -36,6 +36,7 @@ namespace ForumApp
                     Configuration.GetConnectionString("DefaultConnection")));
             //Adding user Identities.
             services.AddDefaultIdentity<ApplicationUser>()
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
