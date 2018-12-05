@@ -6,5 +6,6 @@ namespace ForumApp.Models.Forum
     {
         public ForumListingModel Forum { get; set; }
         public IEnumerable<ForumTopicListingModel> PostList { get; set; }
+        public string SearchQuery { get; set; } = "";
     }
 }

@@ -1,56 +1,115 @@
 ﻿@model ForumApp.Models.Forum.ForumTopicModel;
 
-<h2>Posts for @Model.Forum.Title</h2>
-
-<span id="headingBtn">
-    <a asp-controller="Post"
-        asp-action="CreateNewPost"
-        asp-route-forumId="@Model.Forum.Id"
-        class="btn btn-newPost"
-    >
-        Create New Post
-    </a>
-</span>
-
-@if (Model.PostList.Any())
-{
-    <table class="table table-bordered table-hover" id="forumIndexTable">
-        <tbody>
-            @foreach (var post in Model.PostList)
+<div class="container body-content">
+    <div class="row sectionHeader">
+        <div class="sectionHeading">
+            <span>@Model.Forum.Title Forum</span>
+            @if (Context.User.Identity.IsAuthenticated)
             {
-            <tr>
-                <td>
-                    @post.Id
-                </td>
-                <td>
+                <span class="headingBtn">
                     <a asp-controller="Post"
-                       asp-action="Index"
-                       asp-route-postId="@post.Id">
-                        @post.Title
+                       asp-action="Create"
+                       asp-route-forumId="@Model.Forum.Id"
+                       class="btn btn-newPost">
+                        Create Post
                     </a>
-                </td>
-                <td>
-                    @post.AuthorName
-                </td>
-                <td>
-                    @post.AuthorRating
-                </td>
-                <td>
-                    @post.Created
-                </td>
-            </tr>
+                </span>
             }
-        </tbody>
-    </table>
-}
-else
-{
-    <div class="noPosts">
-        <hr>
-        <p>Post List is empty. Add more Posts</p>
-        <a asp-controller="Post"
-            asp-action="CreateNewPost"
-            asp-route-forumId="@Model.Forum.Id"
-        >Create New Post</a>
+            <form asp-controller="Forum" asp-action="Search" method="post">
+                <div class="searchForm">
+                    <input type="text"
+                           asp-for="SearchQuery"
+                           placeholder="Search..."
+                           class="searchForm"
+                           onfocus="clearThis(this)" />
+                    <button>
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+                <input asp-for="Forum.Id" name="forumId" type="hidden" />
+            </form>
+        </div>
+        <div class="sectionDescription">
+            <div 
+                 class="forumLogo"
+                 style="background-image: url(@Model.Forum.ImageUrl)"
+                 >
+            </div>
+            <p>Welcome to the @Model.Forum.Title forum</p>
+            @if (!Context.User.Identity.IsAuthenticated)
+            {
+                <p>Please 
+                    <a
+                       asp-controller="UserAccount"
+                        asp-action="Register"
+                       >register
+                    </a> to create a post
+                </p>
+            }
+        </div>
+        <div class="row forumIndexContent">
+            @if (Model.PostList.Any())
+            {
+            <table class="table table-hover table-bordered"
+                   id="forumIndexTable">
+                <tbody>
+                    @foreach (var post in Model.PostList)
+                    {
+                    <tr>
+                        <td>
+                            <div class="postData">
+                                <div class="postTitle">
+                                    <a asp-controller="Post"
+                                        asp-action="Index"
+                                        asp-route-postId="@post.Id">
+                                        @post.Title
+                                    </a>
+                                </div>
+                                <div class="forumSubTitle">
+                                    <div>
+                                        <span class="postAuthor">
+                                            <a 
+                                               asp-controller="UserProfile"
+                                               asp-action="UserDetails"
+                                                asp-route-userId="@post.AuthorId"                                 
+                                            >@post.AuthorName</a>
+                                        </span>
+                                        (@post.AuthorRating)
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="forumPostCount">
+                                Replies: @post.RepliesCount
+                            </div>
+                        </td>
+                        <td>
+                            <div class="postDate">
+                                @post.Created
+                            </div>
+                        </td>
+                    </tr>
+                    }
+                </tbody>
+            </table>
+            }
+            else
+            {
+            <div class="noPosts">
+                <i class="glyphicon glyphicon-pencil md-72"></i>
+                <h4>Looks like there is no posts yet in this forum</h4>
+            </div>
+            }
+        </div>
     </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        function clearThis(target){
+            target.value = "";
+        }
+    </script>
 }

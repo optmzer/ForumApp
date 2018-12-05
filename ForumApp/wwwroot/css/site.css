@@ -35,7 +35,7 @@ body {
 
 .sectionHeader{
     background-color: rgba(0, 0, 0, 0.9);
-    padding: 8px 0 24px 24px;
+    padding: 8px 15px 0 15px;
 }
 
 .sectionHeading{
@@ -326,9 +326,8 @@ postAuthorContainer {
     font-size: 0.9em;
 }
 
-#forumIndexContent{
-    padding-bottom: 60px;
-    background-color: white;
+.forumIndexContent {
+    background-color: whitesmoke;
 }
 
 .noPosts{
