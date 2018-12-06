@@ -16,13 +16,13 @@
                 </span>
             }
             <form asp-controller="Forum" asp-action="Search" method="post">
-                <div class="searchForm">
+                <div class=" row searchForm">
                     <input type="text"
                            asp-for="SearchQuery"
                            placeholder="Search..."
-                           class="searchForm"
+                           class="searchBar"
                            onfocus="clearThis(this)" />
-                    <button>
+                    <button class="btn-forumSearch">
                         <i class="glyphicon glyphicon-search"></i>
                     </button>
                 </div>
