@@ -2,7 +2,6 @@
 using ForumApp.Data;
 using ForumApp.Data.Models;
 using ForumApp.Models.Forum;
-using ForumApp.Models.Post;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ForumApp.Controllers
@@ -36,9 +35,9 @@ namespace ForumApp.Controllers
             return View(model);
         }
 
-        public IActionResult Topic(int id)
+        public IActionResult Topic(int forumId, string searchQuery)
         {
-            var forum = _forumService.GetById(id);
+            var forum = _forumService.GetById(forumId);
 
             //Convert forum into list of posts.
             var posts = forum.Posts.Select(p => new ForumTopicListingModel
@@ -60,6 +59,13 @@ namespace ForumApp.Controllers
             };
 
             return View(model);
+        }
+        [HttpPost]
+        public IActionResult Search(int forumId, string searchQuery)
+        {
+
+
+            return RedirectToAction("Topic", new {forumId, searchQuery });
         }
 
         private ForumListingModel BuildForumListing(Post post)
