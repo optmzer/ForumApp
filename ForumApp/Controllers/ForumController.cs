@@ -38,9 +38,10 @@ namespace ForumApp.Controllers
         public IActionResult Topic(int forumId, string searchQuery)
         {
             var forum = _forumService.GetById(forumId);
-
+            var posts = _postService.GetFilteredPosts(forum, searchQuery).ToList();
+            
             //Convert forum into list of posts.
-            var posts = forum.Posts.Select(p => new ForumTopicListingModel
+            var postList = posts.Select(p => new ForumTopicListingModel
             {
                 Id = p.Id,
                 Title = p.Title,
@@ -55,7 +56,7 @@ namespace ForumApp.Controllers
             var model = new ForumTopicModel
             {
                 Forum = BuildForumListing(forum),
-                PostList = posts
+                PostList = postList
             };
 
             return View(model);
@@ -63,8 +64,6 @@ namespace ForumApp.Controllers
         [HttpPost]
         public IActionResult Search(int forumId, string searchQuery)
         {
-
-
             return RedirectToAction("Topic", new {forumId, searchQuery });
         }
 

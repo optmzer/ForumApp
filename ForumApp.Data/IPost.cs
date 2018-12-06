@@ -7,7 +7,7 @@ namespace ForumApp.Data.Models
     {
         Post GetPostById(int postId);
         IEnumerable<Post> GetAll();
-        IEnumerable<Post> GetFilteredPosts(int searchQuery);
+        IEnumerable<Post> GetFilteredPosts(Forum forum, string searchQuery);
         IEnumerable<Post> GetPostsByForum(int forumId);
         IEnumerable<Post> GetLatestPosts(int numOfPosts);
 

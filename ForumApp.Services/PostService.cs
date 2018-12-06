@@ -44,9 +44,13 @@ namespace ForumApp.Services
                     .ThenInclude(reply => reply.User);
         }
 
-        public IEnumerable<Post> GetFilteredPosts(int searchQuery)
+        public IEnumerable<Post> GetFilteredPosts(Forum forum, string searchQuery)
         {
-            throw new NotImplementedException();
+            return string.IsNullOrEmpty(searchQuery) 
+                ? forum.Posts
+                : forum.Posts
+                    .Where(post => post.Title.ToLower().Contains(searchQuery.ToLower())
+                                || post.Content.ToLower().Contains(searchQuery.ToLower()));
         }
 
         public IEnumerable<Post> GetLatestPosts(int numOfPosts)
