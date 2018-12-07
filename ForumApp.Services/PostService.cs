@@ -53,6 +53,14 @@ namespace ForumApp.Services
                                 || post.Content.ToLower().Contains(searchQuery.ToLower()));
         }
 
+        public IEnumerable<Post> GetFilteredPosts(string searchQuery)
+        {
+            return string.IsNullOrEmpty(searchQuery)
+                ? GetAll()
+                : GetAll().Where(post => post.Title.ToLower().Contains(searchQuery.ToLower())
+                                      || post.Content.ToLower().Contains(searchQuery.ToLower()));
+        }
+
         public IEnumerable<Post> GetLatestPosts(int numOfPosts)
         {
             return GetAll()
