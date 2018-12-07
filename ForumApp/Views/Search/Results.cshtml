@@ -1,0 +1,96 @@
+﻿@model ForumApp.Models.Search.SearchResultModel
+
+<div class="container body-content">
+    <div class="row sectionHeader">
+        <div class="sectionHeading">
+            <span>Search Resulst for: @Model.SearchQuery</span>
+            <form asp-controller="Search"
+                  asp-action="Search"
+                  method="post">
+                <div class="searchForm">
+                    <input class="homeSearch"
+                           asp-for="SearchQuery"
+                           type="text"
+                           name="SearchQuery"
+                           placeholder="Search..." />
+                    <button class="btn-forumSearch">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+
+            </form>
+            <div class="row forumIndexContent">
+                @if (!Model.EmptySearchResult)
+                {
+                    <table class="table table-hover table-bordered"
+                           id="searchIndexTable">
+                        <tbody>
+                            @foreach (var post in Model.Posts)
+                            {
+                                <tr>
+                                    <td>
+                                        <a
+                                            asp-controller="Forum"   
+                                            asp-action="Topic"
+                                            asp-route-forumId="@post.Forum.Id"   
+                                        >
+                                            <div class="forumLogo"
+                                                style="background-image: url(@post.Forum.ImageUrl)"     
+                                            >
+                                            </div>
+                                        </a>
+                                        <div class="postData">
+                                            <div class="postTitle">
+                                                <a asp-controller="Post"
+                                                   asp-action="Index"
+                                                   asp-route-postId="@post.Id">
+                                                    @post.Title
+                                                </a>
+                                            </div>
+                                            <div class="forumSubTitle">
+                                                <div>
+                                                    <span class="postAuthor">
+                                                        <a asp-controller="UserProfile"
+                                                           asp-action="UserDetails"
+                                                           asp-route-userId="@post.AuthorId">@post.AuthorName</a>
+                                                    </span>
+                                                    (@post.AuthorRating)
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="forumPostCount">
+                                            Replies: @post.RepliesCount
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="postDate">
+                                            @post.Created
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <div class="noPosts">
+                        <i class="glyphicon glyphicon-pencil md-72"></i>
+                        <h4>Looks like there is no posts with this search parameters...</h4>
+                        <p>Should you write a new one?</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+    @section Scripts {
+        <script>
+        function clearThis(target){
+            target.value = "";
+        }
+        </script>
+    }
