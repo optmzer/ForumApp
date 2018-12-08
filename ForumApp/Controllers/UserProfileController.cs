@@ -6,6 +6,7 @@ using ForumApp.Data.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using ForumApp.Data;
+using ForumApp.Models.ApplicationUser;
 
 namespace ForumApp.Controllers
 {
@@ -27,7 +28,30 @@ namespace ForumApp.Controllers
 
         public IActionResult UserDetails(string userId)
         {
+            var user = _userService.GetById(userId);
+            var userRoles = _userManager.GetRolesAsync(user).Result;
 
+            var model = new UserProfileModel()
+            {
+                IsAdmin = userRoles.Contains("Admin"),
+                UserId = user.Id,
+                Email = user.Email,
+                UserName = user.UserName,
+                UserRating = user.Rating.ToString(),
+                UserProfileImageUrl = user.ProfileImageUrl,
+                UserProfileCreated = user.MemberSince,
+                //ImageUpload =
+            };
+
+            return View(model);
+        }
+
+        /*
+         * Uploads User profile image to Azure Blob storage
+         */ 
+        [HttpPost]
+        public IActionResult UploadUserProfileImage()
+        {
             return View();
         }
     }
