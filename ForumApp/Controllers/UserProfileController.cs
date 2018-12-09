@@ -31,7 +31,7 @@ namespace ForumApp.Controllers
             var user = _userService.GetById(userId);
             var userRoles = _userManager.GetRolesAsync(user).Result;
 
-            var model = new UserProfileModel()
+            var model = new UserProfileModel
             {
                 IsAdmin = userRoles.Contains("Admin"),
                 UserId = user.Id,

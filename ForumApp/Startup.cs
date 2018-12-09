@@ -34,7 +34,7 @@ namespace ForumApp
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DefaultConnection")));
-            //Adding user Identities.
+            // Adding user Identities.
             services.AddDefaultIdentity<ApplicationUser>()
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
@@ -42,13 +42,18 @@ namespace ForumApp
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             // Adding IForum
             services.AddScoped<IForum, ForumService>();
-            //Adding IPost
+            // Adding IPost
             services.AddScoped<IPost, PostService>();
+            // Adds DataSeed
+            services.AddTransient<DataSeed>();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(
+              IApplicationBuilder app
+            , IHostingEnvironment env
+            , DataSeed dataSeed)
         {
             if (env.IsDevelopment())
             {
@@ -60,6 +65,9 @@ namespace ForumApp
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            // Seed SuperUser
+            dataSeed.CreateSuperUser();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
