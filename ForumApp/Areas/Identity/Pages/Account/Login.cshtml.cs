@@ -39,8 +39,8 @@ namespace ForumApp.Areas.Identity.Pages.Account
         {
             // Edit this to be user name
             [Required]
-            //[EmailAddress]
-            public string Username { get; set; }
+            [Display(Name = "Username")]
+            public string UserName { get; set; }
 
             [Required]
             [DataType(DataType.Password)]
@@ -75,7 +75,7 @@ namespace ForumApp.Areas.Identity.Pages.Account
             {
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, set lockoutOnFailure: true
-                var result = await _signInManager.PasswordSignInAsync(Input.Username, Input.Password, Input.RememberMe, lockoutOnFailure: true);
+                var result = await _signInManager.PasswordSignInAsync(Input.UserName, Input.Password, Input.RememberMe, lockoutOnFailure: true);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");

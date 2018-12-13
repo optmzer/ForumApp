@@ -41,9 +41,10 @@ namespace ForumApp.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
             [DataType(DataType.Text)]
             [Display(Name = "Username")]
-            public string Username { get; set; }
+            public string UserName { get; set; }
 
             [Required]
             [EmailAddress]
@@ -72,7 +73,7 @@ namespace ForumApp.Areas.Identity.Pages.Account
             returnUrl = returnUrl ?? Url.Content("~/");
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Username, Email = Input.Email };
+                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
