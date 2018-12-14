@@ -44,6 +44,11 @@ namespace ForumApp
             services.AddScoped<IForum, ForumService>();
             // Adding IPost
             services.AddScoped<IPost, PostService>();
+            // Adding IUpload
+            services.AddScoped<IUpload, UploadService>();
+            // Adding IApplicationUser
+            services.AddScoped<IApplicationUser, ApplicationUserService>();
+
             // Adds DataSeed
             services.AddTransient<DataSeed>();
 

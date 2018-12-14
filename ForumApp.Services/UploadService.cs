@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ForumApp.Data;
+using System;
 using System.Collections.Generic;
 using System.Text;
 /**
@@ -6,7 +7,7 @@ using System.Text;
      */
 namespace ForumApp.Services
 {
-    class UploadService
+    public class UploadService : IUpload
     {
     }
 }
