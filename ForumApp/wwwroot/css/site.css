@@ -148,6 +148,20 @@ body {
 
 /* Forum Topic Styling Ends*/
 
+/* Forum Logo*/
+.forumLogo {
+    border-radius: 3px;
+    float: left;
+    margin-right: 20px;
+    height: 2.6em;
+    width: 2.6em;
+    border: 1px solid #555;
+    background-size: 100%;
+}
+/* Forum Logo End*/
+
+
+
 /*Posts Page Start*/
 .postTitle{
     /*font-family: 'Plantagenet Cherokee';*/

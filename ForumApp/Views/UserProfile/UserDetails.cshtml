@@ -12,37 +12,32 @@
                 User Profile
             </p>
         </div>
-        @* Can add additional logic here
-            @if (User.IsInRole("Admin"))
-            {
-                <button>Deactivate User</button>
-            }
-        *@
+        @*Can add additional logic here*@
+        @if (User.IsInRole("Admin"))
+        {
+            <button>Deactivate User</button>
+        }
         <div class="row userProfile">
             <div class="col-md-4">
-                <div 
-                     id="userProfileImage"
-                     style="background-image: url(@Model.UserProfileImageUrl)" 
-                >
+                <div id="userProfileImage"
+                     style="background-image: url(@Model.UserProfileImageUrl)">
                 </div>
                 @if (User.Identity.Name == Model.UserName)
                 {
-                    <form 
-                        asp-controller="UserProfile" 
-                        asp-action="UploadUserProfileImage"
-                        method="post"
-                        enctype="multipart/form-data"
-                    >
+                    <form asp-controller="UserProfile"
+                          asp-action="UploadUserProfileImage"
+                          method="post"
+                          enctype="multipart/form-data">
                         <div id="upload">
                             <label class="btn btn-default btn-file">
                                 Browse <input type="file" name="file" style="display: none" />
                             </label>
                         </div>
-                        <button 
-                                type="submit" 
+                        <button type="submit"
                                 id="btn-profile"
-                                class="btn btn-default"
-                        >Submit</button>
+                                class="btn btn-default">
+                            Submit
+                        </button>
                     </form>
                 }
             </div>

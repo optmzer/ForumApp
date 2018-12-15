@@ -8,13 +8,16 @@
         {
             <tr>
                 <td>
-                    <a 
-                        asp-controller="Forum"
-                        asp-action="Topic"
-                        asp-route-forumId="@forum.Id"
-                    >
-                        @forum.Title
-                    </a>
+                    <div class="forumLogo"
+                         style="background-image:url(@forum.ImageUrl);">
+                    </div>
+                    <div class="postTitle">
+                        <a asp-controller="Forum"
+                           asp-action="Topic"
+                           asp-route-forumId="@forum.Id">
+                            @forum.Title
+                        </a>
+                    </div>
                 </td>
                 <td>
                     @forum.Description
