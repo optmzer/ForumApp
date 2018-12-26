@@ -17,9 +17,10 @@ namespace ForumApp.Services
             _context = context;
         }
 
-        public Task AddNewPostReply(PostReply reply)
+        public async Task AddNewPostReply(PostReply reply)
         {
-            throw new NotImplementedException();
+            _context.Add(reply);
+            await _context.SaveChangesAsync();
         }
 
         public async Task AddPost(Post post)
