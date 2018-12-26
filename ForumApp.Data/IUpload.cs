@@ -8,8 +8,5 @@ namespace ForumApp.Data
     public interface IUpload
     {
         CloudBlobContainer GetStorageContainer(string connectionString);
-
-
-
     }
 }

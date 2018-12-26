@@ -6,7 +6,7 @@ namespace ForumApp.Data.Models
     {
         public int Id { get; set; }
         public string Content { get; set; }
-        public DateTime Created { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
 
         //Who reply belongs to
         //virtual is a Foreighn Key

@@ -8,7 +8,7 @@ namespace ForumApp.Data.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public DateTime Created { get; set; }
+        public DateTime Created { get; set; } = DateTime.Now;
         //Later on can add upload for pictures
 
         //ApplicationUser Identiies a user who made the post

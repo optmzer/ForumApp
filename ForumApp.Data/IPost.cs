@@ -15,5 +15,6 @@ namespace ForumApp.Data.Models
         Task AddPost(Post post);
         Task Delete(int postId);
         Task EditPostContent(int postId, string newContent);
+        Task AddNewPostReply(PostReply reply);
     }
 }
