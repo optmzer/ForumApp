@@ -30,9 +30,29 @@ namespace ForumApp.Services
             return GetAll().FirstOrDefault(user => user.Id == userId);
         }
 
-        public Task IncrementRating(string userId, Type type)
+        public async Task UpdateUserRating(string userId, Type type)
         {
-            throw new NotImplementedException();
+            var user = GetById(userId);
+            user.Rating = CalculateUserRating(user.Rating, type);
+
+            await _context.SaveChangesAsync();
+        }
+
+        private int CalculateUserRating(int rating, Type type)
+        {
+            var increment = 0;
+
+            if(type == typeof(Post))
+            {
+                increment = 2;
+            }
+
+            if(type == typeof(PostReply))
+            {
+                increment = 3;
+            }
+
+            return rating + increment;
         }
 
         public async Task SetProfileImageAsync(string userId, Uri uri)

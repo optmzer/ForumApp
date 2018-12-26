@@ -15,17 +15,20 @@ namespace ForumApp.Controllers
 {
     public class PostController: Controller
     {
+        private readonly IApplicationUser _userService;
         private readonly IForum _forumService;
         private readonly IPost _postService;
         private readonly UserManager<ApplicationUser> _userManager;
 
         public PostController(IForum forumService
                             , IPost postService
-                            , UserManager<ApplicationUser> userManager)
+                            , UserManager<ApplicationUser> userManager
+                            , IApplicationUser userService)
         {
             _forumService = forumService;
             _postService = postService;
             _userManager = userManager;
+            _userService = userService;
         }
 
         public IActionResult Index(int postId)
@@ -83,9 +86,9 @@ namespace ForumApp.Controllers
             //User is a built in Object that contains Current User info.
             var user = await _userManager.FindByIdAsync(userId);
             var post = BuildPost(model, user);
-            //TODO: User management rating.
 
             await _postService.AddPost(post);
+            await _userService.UpdateUserRating(userId, typeof(Post));
 
             return RedirectToAction("Index", "Post", new { postId = post.Id });
         }

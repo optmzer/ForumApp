@@ -19,7 +19,7 @@ namespace ForumApp.Services
 
         public async Task AddNewPostReply(PostReply reply)
         {
-            _context.Add(reply);
+            _context.PostReplies.Add(reply);
             await _context.SaveChangesAsync();
         }
 

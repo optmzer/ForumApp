@@ -10,6 +10,6 @@ namespace ForumApp.Data
         ApplicationUser GetById(string userId);
         IEnumerable<ApplicationUser> GetAll();
         Task SetProfileImageAsync(string userId, Uri uri);
-        Task IncrementRating(string userId, Type type);
+        Task UpdateUserRating(string userId, Type type);
     }
 }
