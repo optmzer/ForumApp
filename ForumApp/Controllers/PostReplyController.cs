@@ -24,7 +24,28 @@ namespace ForumApp.Controllers
 
         public async Task<IActionResult> CreateNewReply(int postId) {
 
-            return View();
+            var post = _postService.GetPostById(postId);
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var model = new PostReplyModel
+            {
+                AuthorId = user.Id,
+                AuthorName = user.UserName,
+                AuthorRating = user.Rating,
+                AuthorImgUrl = user.ProfileImageUrl,
+
+                IsAuthorAdmin = User.IsInRole("Admin"),
+
+                PostId = post.Id,
+                PostTitle = post.Title,
+                PostContent = post.Content,
+
+                ForumId = post.Forum.Id,
+                ForumTitle = post.Forum.Title,
+                ForumImageUrl = post.Forum.ImageUrl
+            };
+
+            return View(model);
         }
 
         [HttpPost]
