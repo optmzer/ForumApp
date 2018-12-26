@@ -48,7 +48,6 @@ namespace ForumApp.Controllers
                 UserRating = user.Rating.ToString(),
                 UserProfileImageUrl = user.ProfileImageUrl,
                 UserProfileCreated = user.MemberSince,
-                //ImageUpload =
             };
 
             return View(model);
@@ -60,19 +59,13 @@ namespace ForumApp.Controllers
         [HttpPost]
         public async Task<IActionResult> UploadUserProfileImage(IFormFile file)
         {
-            //TODO: Check if I get correct connectionString for Azure Storage
             var userId = _userManager.GetUserId(User);
-
             var container = _uploadService.GetStorageContainer(AzureBlobStorageConnection);
-
             var contentDisposition = ContentDispositionHeaderValue.Parse(file.ContentDisposition);
-
             var fileName = contentDisposition.FileName.Trim('"');
-
             var blockBlob = container.GetBlockBlobReference(fileName);
 
             await blockBlob.UploadFromStreamAsync(file.OpenReadStream());
-
             await _userService.SetProfileImageAsync(userId, blockBlob.Uri);
 
             return RedirectToAction("UserDetails", "UserProfile", new { userId });

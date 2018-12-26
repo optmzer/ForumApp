@@ -17,9 +17,10 @@ namespace ForumApp.Services
         }
 
         //Querying DB for actuall data.
-        public Task Create(Forum forum)
+        public async Task AddNewForum(Forum forum)
         {
-            throw new NotImplementedException();
+            _context.Add(forum);
+            await _context.SaveChangesAsync();
         }
 
         public Task Delete(int forumId)
